@@ -15,13 +15,6 @@ class TOONTANKS_API UHealthComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UHealthComponent();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaxHealth = 100.f;
-	
-	UPROPERTY(BlueprintReadWrite)
-	float Health = 0.f;
-
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -34,4 +27,9 @@ private:
 	void DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser);
 
 	class AToonTanksGameMode* ToonTanksGameMode;
+
+	UPROPERTY(EditAnywhere)
+	float MaxHealth = 100.f;
+	
+	float Health = 0.f;
 };
