@@ -45,3 +45,8 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
 		ToonTanksGameMode -> ActorDied(DamagedActor);
 	}
 }
+
+float UHealthComponent::GetHealthPercent()
+{
+	return Health / MaxHealth;
+}
