@@ -33,6 +33,8 @@ private:
 	float FireRange;
 
 	FTimerHandle FireRateTimerHandler;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRate = 2.f;
 	void CheckFireCondition();
 
