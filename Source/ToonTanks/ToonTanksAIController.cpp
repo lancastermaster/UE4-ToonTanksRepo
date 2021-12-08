@@ -4,10 +4,15 @@
 #include "ToonTanksAIController.h"
 #include "Kismet/GameplayStatics.h"
 
-void ToonTanksAIController::BeginPlay()
+void AToonTanksAIController::BeginPlay()
 {
     Super::BeginPlay();
-    APawn* PlayerPawn = UGamplayStatics::GetPlayerPawn(GetWorld(), 0);
+    PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 
-    SetFocus(PlayerPawn);
+    //SetFocus(PlayerPawn);
+}
+
+void AToonTanksAIController::Tick(float DeltaTime)
+{
+    MoveToActor(PlayerPawn, 200);
 }

@@ -16,10 +16,11 @@ class TOONTANKS_API AToonTanksAIController : public AAIController
 	
 	
 public:
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	
+	class APawn* PlayerPawn;
 };
