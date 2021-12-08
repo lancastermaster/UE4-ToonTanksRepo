@@ -15,10 +15,11 @@ class TOONTANKS_API ATowerMoving : public ATower
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float speed;
 
 protected:
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float speed;
+	
 };
