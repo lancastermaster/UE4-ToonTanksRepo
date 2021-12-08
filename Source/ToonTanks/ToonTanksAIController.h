@@ -14,4 +14,12 @@ class TOONTANKS_API AToonTanksAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+	
+public:
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	
 };
