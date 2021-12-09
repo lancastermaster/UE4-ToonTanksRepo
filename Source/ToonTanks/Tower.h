@@ -26,9 +26,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
-	class ATank* Tank;
+	void CheckFireCondition();
 
+	bool InFireRange();
+
+	class ATank* Tank;
+	
+private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRange;
 
@@ -36,7 +40,5 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRate = 2.f;
-	void CheckFireCondition();
-
-	bool InFireRange();
+	
 };

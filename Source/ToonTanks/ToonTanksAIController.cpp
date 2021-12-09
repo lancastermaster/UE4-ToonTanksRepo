@@ -9,7 +9,7 @@ void AToonTanksAIController::BeginPlay()
     Super::BeginPlay();
     PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 
-    //SetFocus(PlayerPawn);
+    SetFocus(PlayerPawn);
 }
 
 void AToonTanksAIController::Tick(float DeltaTime)

@@ -18,8 +18,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float speed;
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
+	void Rotate(FVector LookAtTarget);
+
+
 
 private:
-	
+	void PursuePlayer(float Offset);
+
+	float CalculateOffsets();
+
+	float XOffset;
+	float YawOffset;
 };
