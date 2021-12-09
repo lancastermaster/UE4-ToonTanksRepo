@@ -21,14 +21,25 @@ public:
 protected:
 	void Rotate(FVector LookAtTarget);
 
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	//add a patrol function here so that enemies aren't static
+	void Patrol(float Offset);
+
+	void GeneratePatrolOffset();
 	
 private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float speed;
 
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float AcceptanceRadius = 400.f;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float SightRange;
+
+	FVector StartLocation;
 
 	void PursuePlayer(float Offset);
 
@@ -37,5 +48,10 @@ private:
 	bool InSightRange();
 
 	float XOffset;
-	float YawOffset;
+	float PatrolOffset;
+
+	FTimerHandle PatrolRateTimerHandler;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float PatrolRate = 2.f;
 };

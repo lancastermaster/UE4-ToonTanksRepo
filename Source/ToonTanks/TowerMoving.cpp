@@ -5,25 +5,40 @@
 #include "Tank.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
+#include "TimerManager.h"
 
 //add a patrol function here so that enemies aren't static
+
+void ATowerMoving::BeginPlay()
+{
+    Super::BeginPlay();
+
+    StartLocation = GetActorLocation();
+    GetWorldTimerManager().SetTimer(PatrolRateTimerHandler, this, &ATowerMoving::GeneratePatrolOffset, PatrolRate, true);
+}
 
 void ATowerMoving::Tick(float DeltaTime)
 {
     if(Tank == nullptr)return;
 
     float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
+    float DistanceFromPost = FVector::Dist(GetActorLocation(), StartLocation);
 
-    if(InSightRange()&& Distance>=400)
+    if(InSightRange()&& Distance >= AcceptanceRadius)
     {
         Rotate(Tank->GetActorLocation());
         PursuePlayer(-CalculateOffsets());
     }
 
-    if(InSightRange()&& Distance<400)
+    if(InSightRange()&& Distance < AcceptanceRadius)
     {
         Rotate(Tank->GetActorLocation());
         PursuePlayer(CalculateOffsets());
+    }
+
+    if(!InSightRange())
+    {
+            Patrol(PatrolOffset);
     }
 }
 
@@ -43,7 +58,21 @@ float ATowerMoving::CalculateOffsets()
     return XOffset;
 }
 
+void ATowerMoving::GeneratePatrolOffset()
+{
+    PatrolOffset = float(FMath::RandRange(-1,1));
+}
+
 void ATowerMoving::PursuePlayer(float Offset)
+{
+    FVector DeltaLocation = FVector::ZeroVector;
+
+    DeltaLocation.X = Offset * speed * UGameplayStatics::GetWorldDeltaSeconds(this);
+
+    AddActorLocalOffset(DeltaLocation, true);
+}
+
+void ATowerMoving::Patrol(float Offset)
 {
     FVector DeltaLocation = FVector::ZeroVector;
 
