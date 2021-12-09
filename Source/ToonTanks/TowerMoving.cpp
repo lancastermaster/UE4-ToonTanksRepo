@@ -6,18 +6,24 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 
-//subtract target location from current location
-//turn resulting x and y values into floats
-//addactorlocaloffset 
+//add a patrol function here so that enemies aren't static
 
 void ATowerMoving::Tick(float DeltaTime)
 {
     if(Tank == nullptr)return;
 
-    if(InSightRange())
+    float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
+
+    if(InSightRange()&& Distance>=400)
     {
         Rotate(Tank->GetActorLocation());
         PursuePlayer(-CalculateOffsets());
+    }
+
+    if(InSightRange()&& Distance<400)
+    {
+        Rotate(Tank->GetActorLocation());
+        PursuePlayer(CalculateOffsets());
     }
 }
 

@@ -21,8 +21,8 @@ public:
 protected:
 	void Rotate(FVector LookAtTarget);
 
-
-
+	//add a patrol function here so that enemies aren't static
+	
 private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float speed;
