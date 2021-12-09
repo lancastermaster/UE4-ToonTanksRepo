@@ -15,9 +15,6 @@ class TOONTANKS_API ATowerMoving : public ATower
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float speed;
-
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -27,9 +24,17 @@ protected:
 
 
 private:
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float speed;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float SightRange;
+
 	void PursuePlayer(float Offset);
 
 	float CalculateOffsets();
+
+	bool InSightRange();
 
 	float XOffset;
 	float YawOffset;

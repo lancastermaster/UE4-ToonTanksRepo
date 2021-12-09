@@ -14,10 +14,10 @@ void ATowerMoving::Tick(float DeltaTime)
 {
     if(Tank == nullptr)return;
 
-    if(InFireRange())
+    if(InSightRange())
     {
         Rotate(Tank->GetActorLocation());
-        PursuePlayer(CalculateOffsets());
+        PursuePlayer(-CalculateOffsets());
     }
 }
 
@@ -31,10 +31,9 @@ void ATowerMoving::Rotate(FVector LookAtTarget)
 
 float ATowerMoving::CalculateOffsets()
 {
-    //target - start location
     FVector EndLocation = Tank->GetActorLocation() - GetActorLocation();
 
-    XOffset = FMath::Clamp(-EndLocation.X, -1.f, 1.f);
+    XOffset = FMath::Clamp(EndLocation.X, -1.f, 1.f);
     return XOffset;
 }
 
@@ -45,4 +44,18 @@ void ATowerMoving::PursuePlayer(float Offset)
     DeltaLocation.X = Offset * speed * UGameplayStatics::GetWorldDeltaSeconds(this);
 
     AddActorLocalOffset(DeltaLocation, true);
+}
+
+bool ATowerMoving::InSightRange()
+{
+    if(Tank)
+    {
+        float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
+
+        if(Distance <= SightRange)
+        {
+            return true;
+        }
+    }
+    return false;
 }
