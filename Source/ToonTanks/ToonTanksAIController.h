@@ -23,4 +23,5 @@ protected:
 
 private:
 	class APawn* PlayerPawn;
+	class ATowerMoving* EnemyTank;
 };

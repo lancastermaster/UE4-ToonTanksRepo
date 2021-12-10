@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 #include "TimerManager.h"
+#include "GameFramework/FloatingPawnMovement.h"
 
 //add a patrol function here so that enemies aren't static
 
@@ -14,43 +15,22 @@ void ATowerMoving::BeginPlay()
     Super::BeginPlay();
 
     StartLocation = GetActorLocation();
-    GetWorldTimerManager().SetTimer(PatrolRateTimerHandler, this, &ATowerMoving::GeneratePatrolOffset, PatrolRate, true);
+    //GetWorldTimerManager().SetTimer(PatrolRateTimerHandler, this, &ATowerMoving::GeneratePatrolOffset, PatrolRate, true);
 }
 
 void ATowerMoving::Tick(float DeltaTime)
 {
-    if(Tank == nullptr)return;
-
-    float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
-    float DistanceFromPost = FVector::Dist(GetActorLocation(), StartLocation);
-
-    if(InSightRange()&& Distance >= AcceptanceRadius)
-    {
-        Rotate(Tank->GetActorLocation());
-        PursuePlayer(-CalculateOffsets());
-    }
-
-    if(InSightRange()&& Distance < AcceptanceRadius)
-    {
-        Rotate(Tank->GetActorLocation());
-        PursuePlayer(CalculateOffsets());
-    }
-
-    if(!InSightRange())
-    {
-            Patrol(PatrolOffset);
-    }
+    
 }
 
-void ATowerMoving::Rotate(FVector LookAtTarget)
+void ATowerMoving::RotateBase(FVector LookAtTarget)
 {
-    FVector ToTarget = LookAtTarget - GetActorLocation();
+	FVector ToTarget = LookAtTarget - BaseMesh->GetComponentLocation();
 	FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
-
-    this->SetActorRotation(LookAtRotation);
+    BaseMesh->SetWorldRotation(LookAtRotation);
 }
 
-float ATowerMoving::CalculateOffsets()
+/*float ATowerMoving::CalculateOffsets()
 {
     FVector EndLocation = Tank->GetActorLocation() - GetActorLocation();
 
@@ -67,7 +47,7 @@ void ATowerMoving::PursuePlayer(float Offset)
 {
     FVector DeltaLocation = FVector::ZeroVector;
 
-    DeltaLocation.X = Offset * speed * UGameplayStatics::GetWorldDeltaSeconds(this);
+    DeltaLocation.X = Offset * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
 
     AddActorLocalOffset(DeltaLocation, true);
 }
@@ -76,10 +56,10 @@ void ATowerMoving::Patrol(float Offset)
 {
     FVector DeltaLocation = FVector::ZeroVector;
 
-    DeltaLocation.X = Offset * speed * UGameplayStatics::GetWorldDeltaSeconds(this);
+    DeltaLocation.X = Offset * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
 
     AddActorLocalOffset(DeltaLocation, true);
-}
+}*/
 
 bool ATowerMoving::InSightRange()
 {

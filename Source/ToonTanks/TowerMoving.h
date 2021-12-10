@@ -17,6 +17,13 @@ class TOONTANKS_API ATowerMoving : public ATower
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	bool InSightRange();
+
+	void RotateBase(FVector LookAtTarget);
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float AcceptanceRadius = 400.f;
 
 protected:
 	void Rotate(FVector LookAtTarget);
@@ -30,11 +37,14 @@ protected:
 	void GeneratePatrolOffset();
 	
 private:
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float speed;
+	/*UPROPERTY(EditAnywhere, Category = "Movement")
+	float Speed;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float AcceptanceRadius = 400.f;
+	float TurnSpeed;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float TurnMult;*/
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float SightRange;
@@ -44,8 +54,6 @@ private:
 	void PursuePlayer(float Offset);
 
 	float CalculateOffsets();
-
-	bool InSightRange();
 
 	float XOffset;
 	float PatrolOffset;
