@@ -25,6 +25,7 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
             ToonTanksPlayerController->SetPlayerEnabledState(false);
         }
         GameOver(false);
+        ToonTanksPlayerController->bShowMouseCursor = true;
     }
     else if (ATower* DestroyedTower = Cast<ATower>(DeadActor))
     {
@@ -33,6 +34,7 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
         if(TargetTowers <= 0)
         {
             GameOver(true);
+            ToonTanksPlayerController->bShowMouseCursor = true;
         }
     }
 }
